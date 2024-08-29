@@ -1,0 +1,42 @@
+.header-box{
+    height: 60px;
+    background:linear-gradient(to right,#fff 0%,#ccc 100% );
+    padding:0px 10px;
+}
+
+.header-box .logo-box{
+    font-size: 20px;
+    line-height: 60px;
+    height: 60px;
+    position: absolute;
+
+}
+
+.header-box .welcome-box{
+    float: right;
+    margin-top: 20px;
+}
+
+.header-box .welcome-box .dropdown-menu{
+    left:-100px;
+}
+
+.footer-box{
+    position: fixed;
+    bottom: 0;
+    width:100%;
+    text-align: center;
+    background: #eee;
+    height: 20px;
+    line-height: 20px;
+
+}
+
+.content-box{
+    padding:0px 10px 30px 10px;
+}
+
+.header-box .glyphicon{
+    margin-right: 10px;
+}
+

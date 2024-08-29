@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="@{/}">
+    <!--    引入bootstrap-->
+    <th:block th:include="common::link"></th:block>
+
+</head>
+    <table class="table table-hover">
+        <tr >
+            <th width="2%"><input type="radio"></th>
+            <th width="10%">ID</th>
+            <th width="15%">名称</th>
+            <th width="15%">助记码</th>
+            <th width="20%">创建时间</th>
+            <th>操作</th>
+        </tr>
+        <tbody>
+        <th:block th:if="${pageVO.data == null || pageVO.data.size == 0}">
+            <tr>
+                <td align="center" colspan="6">没有任何查询结果</td>
+            </tr>
+        </th:block>
+        <th:block th:unless="${pageVO.data == null || pageVO.data.size == 0}">
+            <tr th:each="teacher:${pageVO.data}">
+                <td><input type="checkbox" th:value="${teacher.id}"></td>
+                <td th:number="${teacherStat.index+1}"></td>
+                <td th:text="${teacher.tname}"></td >
+                <td th:text="${teacher.mnemonicCode}"></td>
+                <td  th:text="${#dates.format(teacher.createTime,'yyyy-MM-dd HH:mm' )}"> </td>
+                <td>
+                    <button class="btn btn-group btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>编辑
+                    </button>
+                    <button class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-trash"></span>删除
+                    </button>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+    <nav>
+        <ul class="pagination">
+            <li th:if="${pageVO.curr==1}" class="disabled">
+                <a href="javascript:void(0)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:unless="${pageVO.curr==1}" th:onclick="teacher.toPageTeacherQuery('[[${pageVO.curr-1}]]')" >
+                <a href="javascript:void(0);" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:each="page:${#numbers.sequence(pageVO.curr,pageVO.max+5)}" th:class="${page == pageVO.curr}?'active':''">
+                <a href="javascript:void(0);" th:text="${page}" th:onclick="teacher.toPageTeacherQuery('[[${page}]]')"></a>
+            </li>
+
+            <li th:if="${pageVO.curr == pageVO.max}" class="disabled">
+                <a href="javascript:void(0)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li th:unless="${pageVO.curr == pageVO.max}" th:onclick="teacher.toPageTeacherQuery('[[${pageVO.curr+1}]]')">
+                <a href="javascript:void(0)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>

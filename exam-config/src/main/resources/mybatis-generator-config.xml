@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!-- 引入配置文件 -->
+    <properties resource="db.properties"></properties>
+
+    <context id="Mygenerator" defaultModelType="flat" targetRuntime="MyBatis3">
+
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 通过这些属性去掉自动注释的时候去掉这些注释  -->
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <!--    去掉时间戳        -->
+            <property name="suppressDate" value="true"/>
+            <!--添加 db 表中字段的注释-->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <!--数据库连接信息：驱动类、链接地址、用户名、密码 -->
+        <jdbcConnection driverClass="${mysql.driver}"
+                        connectionURL="${mysql.url}"
+                        userId="${mysql.username}"
+                        password="${mysql.password}">
+            <!--高版本的 mysql-connector-java 需要设置 nullCatalogMeansCurrent=true-->
+            <!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <!--类型解析器-->
+            <!-- 默认false，把jdbc decimal 和 numeric 类型解析为integer -->
+            <!-- true，把jdbc decimal 和 numeric 类型解析为java.math.bigdecimal-->
+            <property name="forceBigDecimals" value="false"/>
+            <!--默认false
+                false，将所有 JDBC 的时间类型解析为 java.util.Date
+                true，将 JDBC 的时间类型按如下规则解析
+                   DATE                    -> java.time.LocalDate
+                   TIME                    -> java.time.LocalTime
+                   TIMESTAMP                   -> java.time.LocalDateTime
+                   TIME_WITH_TIMEZONE      -> java.time.OffsetTime
+                   TIMESTAMP_WITH_TIMEZONE    -> java.time.OffsetDateTime
+            -->
+            <property name="useJSR310Types" value="false"/>
+        </javaTypeResolver>
+
+        <!-- java实体类路径 -->
+        <javaModelGenerator targetPackage="com.duyi.examonline.domain" targetProject="exam-domain/src/main/java">
+            <!-- 是否让schema作为包后缀 默认是false
+                会在 po 目录下在创建一个 “数据库名” 的文件夹，生成的 po 会放在该文件夹下，也就是说会多一层目录
+            -->
+            <property name="enableSubPackages" value="false"/>
+        </javaModelGenerator>
+
+        <!-- 生成映射文件xml的包名和位置-->
+        <sqlMapGenerator targetPackage="mappers" targetProject="exam-config/src/main/resources">
+            <!-- 是否让schema作为包后缀-->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 生成Mapper接口的包名和位置
+            type="XMLMAPPER" 会将接口的实现放在 mapper.xml中，也推荐这样配置。
+            type="ANNOTATEDMAPPER"，接口的实现通过注解写在接口上面
+         -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.duyi.examonline.dao" targetProject="exam-dao/src/main/java">
+            <!-- 是否让schema作为包后缀-->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- 用于自动生成代码的数据库表；生成哪些表;
+            schema为数据库名，oracle需要配置，mysql不需要配置。
+            tableName为对应的数据库表名
+            domainObjectName 是要生成的实体类名(可以不指定)（其中 domainObjectName 不配置时，它会按照帕斯卡命名法将表名转换成类名）
+            enableXXXByExample 默认为 true， 为 true 会生成一个对应Example帮助类，帮助你进行条件查询，不想要可以设为false
+            生成全部表tableName设为 %
+        -->
+        <table tableName="t_dictionary"
+               domainObjectName="Dictionary"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+        />
+        <table tableName="t_teacher"
+               domainObjectName="Teacher"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+        />
+        <table tableName="t_student"
+               domainObjectName="Student"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+        />
+        <table tableName="t_question"
+               domainObjectName="Question"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false">
+
+            <columnOverride column="subject" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="options" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="answer" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+
+        </table>
+
+        <table tableName="t_template"
+               domainObjectName="Template"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+        >
+            <columnOverride column="question1" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="question2" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="question3" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="question4" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="question5" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+        </table>
+
+        <table tableName="t_exam"
+               domainObjectName="Exam"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+        >
+        </table>
+
+        <table tableName="t_student_exam"
+               domainObjectName="StudentExam"
+               enableUpdateByExample="false"
+               enableSelectByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+        >
+            <columnOverride column="question1" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="question2" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="question3" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="question4" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="question5" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="review4" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+            <columnOverride column="review5" jdbcType="VARCHAR" javaType="java.lang.String"></columnOverride>
+        </table>
+    </context>
+</generatorConfiguration>

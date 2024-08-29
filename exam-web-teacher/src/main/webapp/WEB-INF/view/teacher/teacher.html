@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>教师管理系统</title>
+        <base th:href="@{/}">
+        <!--    引入bootstrap-->
+        <th:block th:include="common::link"></th:block>
+        <script src="js/teacher.js"></script>
+        <link rel="stylesheet" href="css/teacher.css" type="text/css">
+
+    </head>
+    <body>
+        <div th:replace="common::header"></div>
+
+        <div th:replace="common::nav"></div>
+
+        <div class="form-inline search-box">
+            <div id="daohang">
+                <div class="form-group">
+                    <label for="search-tname">名称</label>
+                    <input type="text" class="form-control" id="search-tname">
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default btn-sm" onclick="teacher.toTeacherQuery()">
+                        <span class="glyphicon glyphicon-zoom-in"></span> 查询
+                    </button>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-default btn-sm" onclick="teacher.toClearTeacherQuery()">
+                        <span class="glyphicon glyphicon-zoom-out"></span> 清空查询
+                    </button>
+                </div>
+                <div class="form-group right">
+                    <button type="button" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-log-in"></span> 批量导入
+                    </button>
+                </div>
+                <div class="form-group right">
+                    <button type="button" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-log-out"></span> 批量导出
+                    </button>
+                </div>
+
+                <div class="form-group right">
+                    <button type="button" class="btn btn-default btn-sm" onclick="teacher.toDelete()">
+                        <span class="glyphicon glyphicon-trash"></span> 批量删除
+                    </button>
+                </div>
+
+                <div class="form-group right">
+                    <button type="button" class="btn btn-default btn-sm" onclick="teacher.toAdd()">
+                        <span class="glyphicon glyphicon-plus"></span> 新建教师
+                    </button>
+                </div>
+
+                <!-- Modal 模态框-->
+                <div class="modal fade" id="teacher-myModal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="teacher-myModal-label"></h4>
+                            </div>
+                            <div class="modal-body" id="teacher-modal-body"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="button" class="btn btn-primary" id="teacher-modal-submit">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pageTemplate">
+                <table id="teacherGrid" class="table table-hover">
+                    <thead>
+                        <tr >
+                            <th width="2%"><input type="checkbox" onclick="teacher.toCheckAll()"></th>
+                            <th width="10%">ID</th>
+                            <th width="15%">名称</th>
+                            <th width="15%">助记码</th>
+                            <th width="20%">创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    <th:block th:if="${pageVO.data == null || pageVO.data.size == 0}">
+                        <tr>
+                            <td align="center" colspan="6">没有任何查询结果</td>
+                        </tr>
+                    </th:block>
+                    <th:block th:unless="${pageVO.data == null || pageVO.data.size == 0}">
+                        <tr th:each="teacher:${pageVO.data}">
+                            <td>
+                                <input type="checkbox" th:value="${teacher.id}" id="teacher-id" onclick="teacher.toCheckOne()"/>
+                            </td>
+                            <td th:number="${teacherStat.index+1}"></td>
+                            <td th:text="${teacher.tname}"></td >
+                            <td th:text="${teacher.mnemonicCode}"></td>
+                            <td  th:text="${#dates.format(teacher.createTime,'yyyy-MM-dd HH:mm' )}"> </td>
+                            <td>
+                                <button class="btn btn-group btn-sm" th:onclick="teacher.toEdit('[[${teacher.id}]]')">
+                                    <span class="glyphicon glyphicon-pencil"></span>编辑
+                                </button>
+                                <button class="btn btn-danger btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>删除
+                                </button>
+                            </td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+                <nav>
+                    <ul class="pagination">
+                        <li th:if="${pageVO.curr==1}" class="disabled">
+                            <a href="javascript:void(0)" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:unless="${pageVO.curr==1}" th:onclick="teacher.toPageTeacherQuery('[[${pageVO.curr-1}]]')" >
+                            <a href="javascript:void(0);" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="page:${#numbers.sequence(pageVO.curr,pageVO.max+5)}" th:class="${page == pageVO.curr}?'active':''">
+                            <a href="javascript:void(0);" th:text="${page}" th:onclick="teacher.toPageTeacherQuery('[[${page}]]')"></a>
+                        </li>
+
+                        <li th:if="${pageVO.curr == pageVO.max}" class="disabled">
+                            <a href="javascript:void(0)" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li th:unless="${pageVO.curr == pageVO.max}" th:onclick="teacher.toPageTeacherQuery('[[${pageVO.curr+1}]]')">
+                            <a href="javascript:void(0)" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div th:replace="common::footer"></div>
+    </body>
+</html>

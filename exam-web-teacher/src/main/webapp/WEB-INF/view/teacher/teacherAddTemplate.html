@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="@{/}">
+    <!--    引入bootstrap-->
+    <th:block th:include="common::link"></th:block>
+
+</head>
+    <input type="hidden" id="teacher-id" th:value="${teacherTemplate != null ? teacherTemplate.id : ''}" />
+    <div class="form-group">
+        <label >名称:</label>
+        <div class="input-group">
+             <span class="input-group-addon">
+                 <span class="glyphicon glyphicon-user"></span>
+             </span>
+            <input type="text" class="form-control" id="teacher-tname" th:value="${teacherTemplate != null ? teacherTemplate.tname : ''}" />
+        </div>
+    </div>

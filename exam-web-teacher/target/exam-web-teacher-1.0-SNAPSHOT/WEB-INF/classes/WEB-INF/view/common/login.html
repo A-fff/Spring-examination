@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>登录</title>
+        <!-- @{/} thymeleaf的根目录就是工程的根目录  8080 examonline/     -->
+        <!-- /    是服务器Tomcat的根目录 8080       -->
+        <base th:href="@{/}">
+        <th:block th:include="common::link"></th:block>
+        <link rel="stylesheet" href="css/login.css">
+        <script src="js/login.js"></script>
+    </head>
+    <body>
+        <div class="login-box">
+            <form>
+                <div class="form-group">
+                    <h2 th:text="#{login_h}"></h2>
+                </div>
+                <div class="errorP">
+                    <p id="msg"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="tname" th:text="#{username_label}"></label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        </span>
+                        <input type="text" class="form-control" id="tname" name="tname">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="pass" th:text="#{password_label}">  </label>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-lock"></span>
+                        </span>
+                        <input type="password" class="form-control" id="pass" name="pass">
+                    </div>
+                </div>
+                <div class="form-group check-box">
+                    <label>
+                        <input type="checkbox" th:text="#{remember_me}">
+                    </label>
+                </div>
+                <button onclick="login.toLogin()" class="btn btn-primary btn-block" th:text="#{login_btn_label}"></button>
+            </form>
+        </div>
+        <footer>
+            <a href="common/login.html?lang=zh_CN" th:text="#{zh_lable}"></a>
+            <a href="common/login.html?lang=en_US" th:text="#{us_lable}"></a>
+        </footer>
+    </body>
+
+</html>

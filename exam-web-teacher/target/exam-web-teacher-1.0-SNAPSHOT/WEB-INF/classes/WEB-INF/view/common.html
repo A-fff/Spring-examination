@@ -1,0 +1,78 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="link">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+        <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+        <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<!--        引入main.css文件-->
+        <link rel="stylesheet" href="css/main.css" type="text/css">
+        <script src="js/main.js"></script>
+    </div>
+
+    <div th:fragment="header" class="header-box">
+        <div class="logo-box">
+            <span>渡一教育在线考试系统</span>
+        </div>
+        <div class="welcome-box">
+            <!-- Single button -->
+            <span>欢迎</span>
+            <div class="btn-group">
+                <button id="dLabel" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                     [[${session.loginTeacher.tname}]] <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    <li>
+                        <a href="javascript:void(0);">
+                            <span class="glyphicon glyphicon-user"></span>信息
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" onclick="">
+                            <span class="glyphicon glyphicon-wrench"></span>修改密码
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" onclick="main.exit()">
+                            <span class="glyphicon glyphicon-log-out"></span>注销
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div th:fragment="nav" class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">教师管理</a></li>
+                        <li><a href="#">学生管理</a></li>
+                        <li><a href="#">试题管理</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                                模板管理 <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                                <li><a href="javascript:void(0);">新建模板</a></li>
+                                <li><a href="javascript:void(0);">模板列表</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">考试管理</a></li>
+
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+    </div>
+
+
+        <div th:fragment="footer" class="footer-box">
+        © 2024 渡一科技有限公司
+    </div>
+</html>
